@@ -332,7 +332,7 @@ impl FunctionComponent {
         let component_name = self.component_name();
         let (impl_generics, ty_generics, where_clause) = self.generics.split_for_impl();
 
-        let component_name_lit = LitStr::new(&format!("{component_name}<_>"), Span::mixed_site());
+        let component_name_lit = LitStr::new(&format!("{component_name}<_>"), Span::call_site());
 
         quote! {
             #[automatically_derived]
@@ -353,8 +353,8 @@ impl FunctionComponent {
         let props_type = &self.props_type;
         let fn_generics = ty_generics.as_turbofish();
 
-        let component_props = Ident::new("props", Span::mixed_site());
-        let ctx_ident = Ident::new("ctx", Span::mixed_site());
+        let component_props = Ident::new("props", Span::call_site());
+        let ctx_ident = Ident::new("ctx", Span::call_site());
 
         quote! {
             // we cannot disable any lints here because it will be applied to the function body
