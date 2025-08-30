@@ -209,7 +209,7 @@ impl FunctionComponent {
         if self.component_name.is_some() {
             self.name.clone()
         } else {
-            Ident::new("inner", Span::call_site())
+            Ident::new("inner", Span::mixed_site())
         }
     }
 
@@ -255,7 +255,7 @@ impl FunctionComponent {
 
         // We use _ctx here so if the component does not use any hooks, the usused_vars lint will
         // not be triggered.
-        let ctx_ident = Ident::new("_ctx", Span::call_site());
+        let ctx_ident = Ident::new("_ctx", Span::mixed_site());
 
         let mut body_rewriter = BodyRewriter::new(ctx_ident.clone());
         visit_mut::visit_block_mut(&mut body_rewriter, &mut block);
@@ -332,7 +332,7 @@ impl FunctionComponent {
         let component_name = self.component_name();
         let (impl_generics, ty_generics, where_clause) = self.generics.split_for_impl();
 
-        let component_name_lit = LitStr::new(&format!("{component_name}<_>"), Span::call_site());
+        let component_name_lit = LitStr::new(&format!("{component_name}<_>"), Span::mixed_site());
 
         quote! {
             #[automatically_derived]
@@ -353,8 +353,8 @@ impl FunctionComponent {
         let props_type = &self.props_type;
         let fn_generics = ty_generics.as_turbofish();
 
-        let component_props = Ident::new("props", Span::call_site());
-        let ctx_ident = Ident::new("ctx", Span::call_site());
+        let component_props = Ident::new("props", Span::mixed_site());
+        let ctx_ident = Ident::new("ctx", Span::mixed_site());
 
         quote! {
             // we cannot disable any lints here because it will be applied to the function body
