@@ -255,7 +255,7 @@ impl FunctionComponent {
 
         // We use _ctx here so if the component does not use any hooks, the usused_vars lint will
         // not be triggered.
-        let ctx_ident = Ident::new("_ctx", Span::mixed_site());
+        let ctx_ident = Ident::new("_ctx", Span::call_site());
 
         let mut body_rewriter = BodyRewriter::new(ctx_ident.clone());
         visit_mut::visit_block_mut(&mut body_rewriter, &mut block);
