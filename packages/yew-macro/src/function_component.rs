@@ -209,7 +209,7 @@ impl FunctionComponent {
         if self.component_name.is_some() {
             self.name.clone()
         } else {
-            Ident::new("inner", Span::mixed_site())
+            Ident::new("inner", Span::call_site())
         }
     }
 
