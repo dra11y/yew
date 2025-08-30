@@ -52,7 +52,7 @@ impl VisitMut for BodyRewriter {
                             note = "see: https://yew.rs/docs/next/concepts/function-components/hooks"
                         );
                     } else {
-                        *i = parse_quote_spanned! { i.span() => ::yew::functional::Hook::run(#i, #ctx_ident) };
+                        *i = parse_quote_spanned! { proc_macro2::Span::call_site() => ::yew::functional::Hook::run(#i, #ctx_ident) };
                     }
 
                     return;
@@ -78,7 +78,7 @@ impl VisitMut for BodyRewriter {
                                 note = "see: https://yew.rs/docs/next/concepts/function-components/hooks"
                             );
                         } else {
-                            *i = parse_quote_spanned! { i.span() => ::yew::functional::Hook::run(#i, #ctx_ident) };
+                            *i = parse_quote_spanned! { proc_macro2::Span::call_site() => ::yew::functional::Hook::run(#i, #ctx_ident) };
                         }
                     } else {
                         visit_mut::visit_expr_macro_mut(self, m);
